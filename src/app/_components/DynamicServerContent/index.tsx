@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import moment from 'moment';
 
@@ -69,6 +69,25 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
 
         return () => clearInterval(interval);
     }, []);
+
+    const motd = useMemo((): string | null => {
+        if (typeof data.status === 'string') return null;
+
+        let html = autoToHTML(data.status.motd.raw);
+
+        // if the only color is #FFFFFF, then change it. if there are other colors, keep them
+        if (
+            html.match(/color:#ffffff/gi)?.length ===
+            html.match(/color/gi)?.length
+        ) {
+            html = html.replace(
+                /color:#ffffff/gi,
+                `color:${theme.palette.grey[400]}`,
+            );
+        }
+
+        return html;
+    }, [data.status, theme.palette.grey]);
 
     return (
         <Box
@@ -190,13 +209,13 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
                                         </Tooltip>
                                     </Box>
                                 </Box>
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: autoToHTML(
-                                            data.status.motd.raw,
-                                        ),
-                                    }}
-                                />
+                                {motd ? (
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: motd,
+                                        }}
+                                    />
+                                ) : null}
                             </Box>
                         </Box>
                     </StyledBox>
