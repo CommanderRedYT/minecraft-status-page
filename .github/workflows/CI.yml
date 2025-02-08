@@ -43,6 +43,7 @@ jobs:
         id: eslint
         run: |
           yarn lint --max-warnings=0 --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif
+          echo $? > eslint-results.result
 
       - name: Upload ESLint results
         uses: github/codeql-action/upload-sarif@v3
@@ -52,9 +53,9 @@ jobs:
 
       - name: Fail if ESLint found any errors
         run: |
-          if [ -f eslint-results.result ]; then
-              exit 0
-          else
+          eslint_result=$(cat eslint-results.result)
+          if [ $eslint_result -ne 0 ]; then
+              echo "ESLint found errors"
               exit 1
           fi
 
