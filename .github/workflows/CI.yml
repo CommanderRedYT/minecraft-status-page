@@ -197,7 +197,7 @@ jobs:
         id: name
         run: |
           lower_case_repo=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          echo "image_name=${lower_case_repo}" >> $GITHUB_ENV
+          echo "image_name=ghcr.io/${lower_case_repo}" >> $GITHUB_ENV
 
       - name: Tag container with latest using buildx
         run: |
