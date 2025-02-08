@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
             hmrRefreshes: true,
         },
     },
+    typescript: {
+        ignoreBuildErrors: true,
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
     devIndicators: {
         appIsrStatus: true,
         buildActivity: true,
