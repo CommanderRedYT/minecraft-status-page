@@ -14,9 +14,6 @@ export interface PingIconProps extends SvgIconProps {
 }
 
 const PingIcon: FC<PingIconProps> = ({ ping, ...rest }) => {
-    if (ping <= 0) {
-        return <SignalCellular0BarRounded {...rest} />;
-    }
     if (ping <= 50) {
         return <SignalCellular4BarRounded {...rest} />;
     }
