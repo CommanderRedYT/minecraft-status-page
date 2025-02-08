@@ -14,6 +14,7 @@ import type { StatusResponse } from '@/app/_api/api';
 import { fetchDataAction } from '@/app/actions';
 
 import PingIcon from '@components/PingIcon';
+import GithubIcon from '@mui/icons-material/GitHub';
 import MapIcon from '@mui/icons-material/Map';
 import { alpha, styled, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -219,19 +220,50 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
                     </Box>
                 ) : null}
             </Box>
-            {lastUpdated ? (
-                <Box>
+            <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="center"
+                gap={1}
+            >
+                {lastUpdated ? (
+                    <>
+                        <Typography
+                            variant="subtitle2"
+                            align="center"
+                            color="textDisabled"
+                        >
+                            The data was last updated{' '}
+                            {moment(lastUpdated).fromNow()} (
+                            {moment(lastUpdated).format('HH:mm:ss')})
+                        </Typography>
+                        <Typography
+                            variant="subtitle2"
+                            align="center"
+                            color="textDisabled"
+                        >
+                            &bull;
+                        </Typography>
+                    </>
+                ) : null}
+                <a
+                    href="https://github.com/CommanderRedYT/minecraft-status-page"
+                    target="_blank"
+                >
                     <Typography
                         variant="subtitle2"
                         align="center"
                         color="textDisabled"
+                        display="flex"
+                        flexDirection="row"
+                        gap={0.5}
+                        alignItems="center"
                     >
-                        The data was last updated{' '}
-                        {moment(lastUpdated).fromNow()} (
-                        {moment(lastUpdated).format('HH:mm:ss')})
+                        Find the source code on GitHub{' '}
+                        <GithubIcon fontSize="inherit" />
                     </Typography>
-                </Box>
-            ) : null}
+                </a>
+            </Box>
             {process.env.NODE_ENV === 'development' ? (
                 <script type="application/ld+json">
                     {JSON.stringify(data)}
