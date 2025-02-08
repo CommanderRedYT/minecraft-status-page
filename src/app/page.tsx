@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { unstable_noStore as noStore } from 'next/cache';
 
 import type { FC } from 'react';
@@ -34,3 +35,20 @@ const Home: FC = async () => {
 export default Home;
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(): Promise<Metadata> {
+    const status = await fetchStatus();
+
+    if (typeof status.status === 'string') {
+        return {
+            title: status.status,
+            description: status.status,
+        };
+    }
+
+    return {
+        title: status.serverName,
+        description: status.status.motd.clean,
+        icons: status.status.favicon ?? '/unknown_server.png',
+    };
+}

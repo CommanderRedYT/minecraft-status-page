@@ -22,6 +22,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import unknownServer from '@public/unknown_server.png';
+import { autoToHTML } from '@sfirew/minecraft-motd-parser';
 
 export interface DynamicServerContentProps {
     initialData: StatusResponse;
@@ -108,6 +109,7 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
                                                 theme.shape.borderRadius,
                                             boxShadow: theme.shadows[3],
                                         }}
+                                        priority
                                     />
                                 </Box>
                             ) : (
@@ -118,6 +120,7 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
                                         borderRadius: theme.shape.borderRadius,
                                         boxShadow: theme.shadows[3],
                                     }}
+                                    priority
                                 />
                             )}
                             <Box
@@ -128,6 +131,7 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
                                         fontSize: theme.typography.h5.fontSize,
                                     },
                                     letterSpacing: '-0.05em',
+                                    lineHeight: 1.1,
                                 }}
                                 className={minecraftFont.className}
                                 flex={1}
@@ -144,6 +148,7 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
                                             letterSpacing: '-0.05em',
                                             lineHeight: 1,
                                         }}
+                                        mb={1}
                                     >
                                         {data.serverName}
                                     </Typography>
@@ -187,13 +192,9 @@ const DynamicServerContent: FC<DynamicServerContentProps> = ({
                                 </Box>
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: data.status.motd.html.replace(
-                                            /#FFFFFF/g,
-                                            theme.palette.grey[400],
+                                        __html: autoToHTML(
+                                            data.status.motd.raw,
                                         ),
-                                    }}
-                                    style={{
-                                        lineHeight: 1.5,
                                     }}
                                 />
                             </Box>
