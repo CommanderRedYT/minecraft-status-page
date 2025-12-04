@@ -46,7 +46,7 @@ jobs:
           echo $? > eslint-results.result
 
       - name: Upload ESLint results
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
