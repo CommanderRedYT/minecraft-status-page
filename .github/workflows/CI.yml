@@ -11,7 +11,6 @@ on:
       - main
 
 env:
-  NODE_VERSION: 23.x
   # PLATFORMS: linux/amd64,linux/arm64
   PLATFORMS: linux/amd64
 
@@ -31,7 +30,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: '.nvmrc'
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
 
